@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<articulos>
+    <articulo>
+        <nombre>Mesa</nombre>
+        <precio>642</precio>
+    </articulo>
+
+    <articulo>
+        <nombre>Lampara</nombre>
+        <precio>305</precio>
+    </articulo>
+
+    <articulo>
+        <nombre>Mesa</nombre>
+        <precio>89</precio>
+    </articulo>
+</articulos>
