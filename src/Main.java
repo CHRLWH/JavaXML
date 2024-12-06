@@ -1,7 +1,8 @@
+import DAO.CRUD;
 
 public class Main {
     public static void main(String[] args) {
-        leerxml xml = new leerxml();
+        CRUD xml = new CRUD();
                 xml.leer("articulo");
 
     }

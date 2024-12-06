@@ -1,3 +1,5 @@
+package DAO;
+import Service.Persona;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -9,10 +11,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class leerxml {
+public class CRUD {
 
-    public leerxml() {
+    public CRUD() {
     }
+
+
 
     public List<Persona> leer(String primerNodoListable){
         //Zona declarativa
@@ -30,7 +34,7 @@ public class leerxml {
 
         //Zona ejecutiva
         try{
-            file = new File("xml/articulos.xml");
+            file = new File("src/Repository/articulos.xml");
             factory = DocumentBuilderFactory.newInstance();
             builder = factory.newDocumentBuilder();
             //Sin éste parse no podría partir de un nodo concreto
