@@ -19,12 +19,16 @@ import java.util.List;
 
 public class CRUD {
 
-    public CRUD() {
+    private final String rutaDelArchivoXml;
+    public CRUD(String rutaDelArchivoXml) {
+
+        this.rutaDelArchivoXml = rutaDelArchivoXml;
+
     }
 
 
 
-    public Articulos leer(String primerNodoListable){
+    public Articulos leerTodos(String primerNodoListable){
 
         //Zona declarativa
         Articulos articulosAux = new Articulos();
@@ -42,7 +46,7 @@ public class CRUD {
 
         //Zona ejecutiva
         try{
-            file = new File("src/Repository/articulos.xml");
+            file = new File(rutaDelArchivoXml);
             factory = DocumentBuilderFactory.newInstance();
             builder = factory.newDocumentBuilder();
             //Sin éste parse no podría partir de un nodo concreto
@@ -69,7 +73,7 @@ public class CRUD {
     }
    public void agregar(Articulo entrenamiento) {
         try {
-            File file = new File("src/Repository/articulos.xml");
+            File file = new File(rutaDelArchivoXml);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(file);
@@ -108,7 +112,7 @@ public class CRUD {
 
     public void actualizar(int id, Articulo nuevoArticulo) {
         try {
-            File file = new File("src/Repository/articulos.xml");
+            File file = new File(rutaDelArchivoXml);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(file);
@@ -143,7 +147,7 @@ public class CRUD {
         //Usar node.delete..
 
         try {
-            File file = new File("src/Repository/articulos.xml");
+            File file = new File(rutaDelArchivoXml);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(file);
