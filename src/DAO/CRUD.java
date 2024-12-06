@@ -6,6 +6,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.print.attribute.Attribute;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -23,7 +24,8 @@ public class CRUD {
 
 
 
-    public List<Articulo> leer(String primerNodoListable){
+    public Articulos leer(String primerNodoListable){
+
         //Zona declarativa
         Articulos articulosAux = new Articulos();
         Articulo articuloAux;
@@ -55,16 +57,17 @@ public class CRUD {
                     id = Integer.parseInt(elemento.getAttribute("id"));
                     nombre = elemento.getElementsByTagName("nombre").item(0).getTextContent();
                     precio = Integer.parseInt(elemento.getElementsByTagName("precio").item(0).getTextContent());;
-
+                    articuloAux = new Articulo(id,nombre,precio);
+                    articulosAux.anhadirAlaLista(articuloAux);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return personas;
+        return articulosAux;
     }
-/*    public void agregar(Articulo entrenamiento) {
+   public void agregar(Articulo entrenamiento) {
         try {
             File file = new File("src/Repository/articulos.xml");
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -81,16 +84,51 @@ public class CRUD {
             nombre.setTextContent(entrenamiento.getNombre());
 
             Element duracion = doc.createElement("duracion");
-            duracion.setTextContent(String.valueOf(entrenamiento.getDuracion()));
+            duracion.setTextContent(String.valueOf(entrenamiento.getPrecio()));
 
-            Element nivel = doc.createElement("nivel");
-            nivel.setTextContent(entrenamiento.getNivel());
 
             nuevoEntrenamiento.appendChild(nombre);
             nuevoEntrenamiento.appendChild(duracion);
-            nuevoEntrenamiento.appendChild(nivel);
+
 
             root.appendChild(nuevoEntrenamiento);
+
+            // Guardar los cambios en el archivo XML
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(file);
+            transformer.transform(source, result);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletear(int idDelArticuloABorrar){
+        //Usar node.delete..
+
+        try {
+            File file = new File("src/Repository/articulos.xml");
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(file);
+
+            NodeList nodeList = doc.getElementsByTagName("articulo");
+
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element elemento = (Element) node;
+
+                    if (Integer.parseInt(elemento.getAttribute("id")) == idDelArticuloABorrar) {
+                        elemento.getParentNode().removeChild(elemento);
+                        break;
+                    }
+                }
+            }
 
 // Guardar los cambios en el archivo XML
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -103,5 +141,5 @@ public class CRUD {
             e.printStackTrace();
         }
     }
-*/
+
 }
