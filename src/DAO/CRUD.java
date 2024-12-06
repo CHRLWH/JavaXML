@@ -106,6 +106,39 @@ public class CRUD {
         }
     }
 
+    public void actualizar(int id, Articulo nuevoArticulo) {
+        try {
+            File file = new File("src/Repository/articulos.xml");
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(file);
+
+            NodeList nodeList = doc.getElementsByTagName("articulo");
+
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    Element elemento = (Element) node;
+
+                    if (Integer.parseInt(elemento.getAttribute("id")) == id) {
+                        elemento.getElementsByTagName("nombre").item(0).setTextContent(nuevoArticulo.getNombre());
+                        elemento.getElementsByTagName("precio").item(0).setTextContent(String.valueOf(nuevoArticulo.getPrecio()));
+                    }
+                }
+            }
+
+// Guardar los cambios en el archivo XML
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(file);
+            transformer.transform(source, result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void deletear(int idDelArticuloABorrar){
         //Usar node.delete..
 

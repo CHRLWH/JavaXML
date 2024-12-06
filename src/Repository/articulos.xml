@@ -5,8 +5,8 @@
     </articulo>
 
     <articulo id="2">
-        <nombre>Lampara</nombre>
-        <precio>305</precio>
+        <nombre>medicinas</nombre>
+        <precio>33</precio>
     </articulo>
 
     <articulo id="3">
