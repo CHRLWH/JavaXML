@@ -1,11 +1,10 @@
-package Service;
+package Logica;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Articulos {
-   private List<Articulo> articulos;
+   private ArrayList<Articulo> articulos;
 
     public Articulos() {
         this.articulos = new ArrayList<Articulo>();
@@ -29,5 +28,7 @@ public class Articulos {
                         equals(articuloAConseguir)));
     }
 
-
+    public List<Articulo> getArticulos() {
+        return articulos;
+    }
 }

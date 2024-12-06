@@ -1,12 +1,12 @@
-import DAO.CRUD;
-import Service.Articulo;
-import Service.Articulos;
+import Datos.CRUD;
+import Datos.Funcionalidades;
+import Logica.Articulo;
 
 public class Main {
     public static void main(String[] args) {
-        CRUD xml = new CRUD("src/Repository/articulos.xml");
-        Articulo articulo = new Articulo(2,"medicinas",33);
-        xml.actualizar(2,articulo);
+
+        Funcionalidades.compararPreciosDeArticulosPorId(0,2);
+
 
     }
 }

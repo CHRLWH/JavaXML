@@ -1,4 +1,4 @@
-package Service;
+package Logica;
 
 import java.util.Objects;
 
