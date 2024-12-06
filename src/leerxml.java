@@ -15,29 +15,41 @@ public class leerxml {
     }
 
     public List<Persona> leer(String primerNodoListable){
+        //Zona declarativa
         List <Persona> personas = new ArrayList<>();
+        String nombre;
+        File file;
+        DocumentBuilderFactory factory;
+        DocumentBuilder builder;
+        Document doc;
+        NodeList nodeList;
+        Node node;
+        Element elemento;
+        int id;
+        int precio;
 
+        //Zona ejecutiva
         try{
-            File file = new File("xml/articulos.xml");
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
+            file = new File("xml/articulos.xml");
+            factory = DocumentBuilderFactory.newInstance();
+            builder = factory.newDocumentBuilder();
             //Sin éste parse no podría partir de un nodo concreto
-            Document doc = builder.parse(file);
+            doc = builder.parse(file);
 
-            NodeList nodeList = doc.getElementsByTagName(primerNodoListable);
+            nodeList = doc.getElementsByTagName(primerNodoListable);
             for (int i = 0; i<nodeList.getLength();i++){
-                Node node = nodeList.item(i);
+                node = nodeList.item(i);
 
                 if (node.getNodeType() == Node.ELEMENT_NODE){
-                    Element elemento = (Element) node;
-
-                    String nombre = elemento.getElementsByTagName("nombre").toString();
-                    int id = Integer.parseInt(elemento.getElementsByTagName("precio").toString());
+                    elemento = (Element) node;
+                    id = Integer.parseInt(elemento.getElementsByTagName("id").item(0).getTextContent());
+                    nombre = elemento.getElementsByTagName("nombre").item(0).getTextContent();
+                    precio = Integer.parseInt(elemento.getElementsByTagName("precio").item(0).getTextContent());;
 
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
         return personas;

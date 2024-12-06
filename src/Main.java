@@ -2,7 +2,7 @@
 public class Main {
     public static void main(String[] args) {
         leerxml xml = new leerxml();
-                xml.leer("articulos");
+                xml.leer("articulo");
 
     }
 }
