@@ -8,6 +8,9 @@ public class Articulo {
     private String nombre;
     private int precio;
 
+    public Articulo() {
+    }
+
     public Articulo(int id, String nombre, int precio) {
         this.id = id;
         this.nombre = nombre;
