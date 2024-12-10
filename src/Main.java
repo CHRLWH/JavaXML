@@ -1,11 +1,11 @@
 import Datos.CRUD;
-import Datos.Funcionalidades;
-import Logica.Articulo;
+import Logica.Funcionalidades;
 
 public class Main {
     public static void main(String[] args) {
 
-        Funcionalidades.compararPreciosDeArticulosPorId(1,3);
+        Funcionalidades.cuadroEstadisticas();
+        CRUD.leerTodos("articulo");
 
     }
 }

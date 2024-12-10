@@ -9,7 +9,11 @@ public class Articulos {
    private ArrayList<Articulo> articulos = new ArrayList<Articulo>();
 
     public Articulos() {
-        this.articulos = CRUD.leerTodos();
+        this.articulos = CRUD.leerTodos("articulo");
+    }
+
+    public Articulos(ArrayList<Articulo> articulos) {
+        this.articulos = articulos;
     }
 
     public void anhadirAlaLista(Articulo articuloQueInsertar){

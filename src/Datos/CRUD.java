@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class CRUD {
 
     private final String rutaDelArchivoXml;
+
     public CRUD(String rutaDelArchivoXml) {
 
         this.rutaDelArchivoXml = rutaDelArchivoXml;
@@ -27,17 +28,28 @@ public class CRUD {
     }
 
 
+    public static Document conectarConDocumento(String filePath) throws Exception{
+        File file;
+        DocumentBuilderFactory factory;
+        DocumentBuilder builder;
+        Document doc;
 
-    public static ArrayList<Articulo> leerTodos(){
+            file = new File("src/Repositorio/articulos.xml");
+            factory = DocumentBuilderFactory.newInstance();
+            builder = factory.newDocumentBuilder();
+            //Sin éste parse no podría partir de un nodo concreto
+            doc = builder.parse(filePath);
+
+        return doc;
+    }
+    public static ArrayList<Articulo> leerTodos(String primerNodoDesdeElQueLeer){
 
         //Zona declarativa
 
         ArrayList <Articulo> articulosAux = new ArrayList<Articulo>();
         Articulo articuloAux;
         String nombre;
-        File file;
-        DocumentBuilderFactory factory;
-        DocumentBuilder builder;
+
         Document doc;
         NodeList nodeList;
         Node node;
@@ -46,14 +58,12 @@ public class CRUD {
         int precio;
 
         //Zona ejecutiva
-        try{
-            file = new File("src/Repositorio/articulos.xml");
-            factory = DocumentBuilderFactory.newInstance();
-            builder = factory.newDocumentBuilder();
-            //Sin éste parse no podría partir de un nodo concreto
-            doc = builder.parse(file);
 
-            nodeList = doc.getElementsByTagName("articulo");
+        try{
+
+            doc = conectarConDocumento("src/Repositorio/articulos.xml");
+
+            nodeList = doc.getElementsByTagName(primerNodoDesdeElQueLeer);
             for (int i = 0; i<nodeList.getLength();i++){
                 node = nodeList.item(i);
 
@@ -73,6 +83,10 @@ public class CRUD {
         return articulosAux;
     }
    public void agregar(Articulo entrenamiento) {
+
+        //Zona declarativa
+
+       //Zona ejecutiva
         try {
             File file = new File(rutaDelArchivoXml);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -82,7 +96,7 @@ public class CRUD {
             Element root = doc.getDocumentElement();
 
         // Crear un nuevo elemento "articulo"
-            Element nuevoEntrenamiento = doc.createElement("articulo");
+            Element nuevoEntrenamiento = doc.createElement("articulos");
             nuevoEntrenamiento.setAttribute("id", String.valueOf(entrenamiento.getId()));
 
             Element nombre = doc.createElement("nombre");
@@ -112,6 +126,9 @@ public class CRUD {
     }
 
     public void actualizar(int id, Articulo nuevoArticulo) {
+        //Zona declarativa
+
+        //Zona ejecutiva
         try {
             File file = new File(rutaDelArchivoXml);
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
