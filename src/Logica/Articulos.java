@@ -1,13 +1,15 @@
 package Logica;
 
+import Datos.CRUD;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Articulos {
-   private ArrayList<Articulo> articulos;
+   private ArrayList<Articulo> articulos = new ArrayList<Articulo>();
 
     public Articulos() {
-        this.articulos = new ArrayList<Articulo>();
+        this.articulos = CRUD.leerTodos();
     }
 
     public void anhadirAlaLista(Articulo articuloQueInsertar){

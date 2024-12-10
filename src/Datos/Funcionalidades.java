@@ -8,9 +8,8 @@ public class Funcionalidades {
     public static double compararPreciosDeArticulosPorId(int idArticulo1,int idArticulo2){
         Articulos articulos = new Articulos();
         CRUD crud = new CRUD("src/Repositorio/articulos.xml");
-        articulos = crud.leerTodos("articulo");
-        for (Articulo i:articulos.ge){
+        for (Articulo i:articulos.getArticulos()){
 
-        }
+       }
     }
 }

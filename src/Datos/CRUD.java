@@ -14,6 +14,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.util.ArrayList;
 
 
 public class CRUD {
@@ -27,10 +28,11 @@ public class CRUD {
 
 
 
-    public Articulos leerTodos(String primerNodoListable){
+    public static ArrayList<Articulo> leerTodos(){
 
         //Zona declarativa
-        Articulos articulosAux = new Articulos();
+
+        ArrayList <Articulo> articulosAux = new ArrayList<Articulo>();
         Articulo articuloAux;
         String nombre;
         File file;
@@ -45,13 +47,13 @@ public class CRUD {
 
         //Zona ejecutiva
         try{
-            file = new File(rutaDelArchivoXml);
+            file = new File("src/Repositorio/articulos.xml");
             factory = DocumentBuilderFactory.newInstance();
             builder = factory.newDocumentBuilder();
             //Sin éste parse no podría partir de un nodo concreto
             doc = builder.parse(file);
 
-            nodeList = doc.getElementsByTagName(primerNodoListable);
+            nodeList = doc.getElementsByTagName("articulo");
             for (int i = 0; i<nodeList.getLength();i++){
                 node = nodeList.item(i);
 
@@ -61,7 +63,7 @@ public class CRUD {
                     nombre = elemento.getElementsByTagName("nombre").item(0).getTextContent();
                     precio = Integer.parseInt(elemento.getElementsByTagName("precio").item(0).getTextContent());;
                     articuloAux = new Articulo(id,nombre,precio);
-                    articulosAux.anhadirAlaLista(articuloAux);
+                    articulosAux.add(articuloAux);
                 }
             }
         } catch (Exception e) {
