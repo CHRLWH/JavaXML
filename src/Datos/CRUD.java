@@ -7,6 +7,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 
+import javax.print.Doc;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -86,23 +87,30 @@ public class CRUD {
 
         //Zona declarativa
 
+       Document doc;
+       Element root;
+       Element nuevoEntrenamiento;
+       Element nombre;
+       Element duracion;
+       TransformerFactory transformerFactory;
+       Transformer transformer;
+       DOMSource source;
+       StreamResult result;
+       File file;
        //Zona ejecutiva
         try {
-            File file = new File(rutaDelArchivoXml);
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(file);
 
-            Element root = doc.getDocumentElement();
+            doc = conectarConDocumento("src/Repositorio/articulos.xml");
+            root = doc.getDocumentElement();
 
         // Crear un nuevo elemento "articulo"
-            Element nuevoEntrenamiento = doc.createElement("articulos");
+            nuevoEntrenamiento = doc.createElement("articulos");
             nuevoEntrenamiento.setAttribute("id", String.valueOf(entrenamiento.getId()));
 
-            Element nombre = doc.createElement("nombre");
+            nombre = doc.createElement("nombre");
             nombre.setTextContent(entrenamiento.getNombre());
 
-            Element duracion = doc.createElement("duracion");
+            duracion = doc.createElement("duracion");
             duracion.setTextContent(String.valueOf(entrenamiento.getPrecio()));
 
 
@@ -113,10 +121,11 @@ public class CRUD {
             root.appendChild(nuevoEntrenamiento);
 
             // Guardar los cambios en el archivo XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(file);
+            file = new File("src/Repositorio/articulos.xml");
+            transformerFactory = TransformerFactory.newInstance();
+            transformer = transformerFactory.newTransformer();
+            source = new DOMSource(doc);
+            result = new StreamResult(file);
             transformer.transform(source, result);
 
 
@@ -127,21 +136,27 @@ public class CRUD {
 
     public void actualizar(int id, Articulo nuevoArticulo) {
         //Zona declarativa
-
+        File file;
+        Document doc;
+        NodeList nodeList;
+        Node node;
+        Element elemento;
+        TransformerFactory transformerFactory;
+        Transformer transformer;
+        DOMSource source;
+        StreamResult result;
         //Zona ejecutiva
         try {
-            File file = new File(rutaDelArchivoXml);
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(file);
 
-            NodeList nodeList = doc.getElementsByTagName("articulo");
+            doc = conectarConDocumento("src/Repositorio/articulos.xml");
+
+            nodeList = doc.getElementsByTagName("articulo");
 
             for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
+                node = nodeList.item(i);
 
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element elemento = (Element) node;
+                    elemento = (Element) node;
 
                     if (Integer.parseInt(elemento.getAttribute("id")) == id) {
                         elemento.getElementsByTagName("nombre").item(0).setTextContent(nuevoArticulo.getNombre());
@@ -151,10 +166,11 @@ public class CRUD {
             }
 
 // Guardar los cambios en el archivo XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(file);
+            file = new File("src/Repositorio/articulos.xml");
+            transformerFactory = TransformerFactory.newInstance();
+            transformer = transformerFactory.newTransformer();
+            source = new DOMSource(doc);
+            result = new StreamResult(file);
             transformer.transform(source, result);
 
         } catch (Exception e) {

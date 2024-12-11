@@ -15,7 +15,7 @@ import static Datos.CRUD.conectarConDocumento;
 
 public class Funcionalidades {
 
-    public static Articulo compararPreciosDeArticulosPorId(int idArticulo1,int idArticulo2){
+    public static Articulo compararPreciosDeArticulosPorId(int idArticulo1,int idArticulo2) {
 
         //Comparador de precios buscando por id
 
@@ -68,10 +68,7 @@ public class Funcionalidades {
                 contadorHijos = nodePadre.getChildNodes().getLength();
                 contadorNietos = nodoHijo.getChildNodes().getLength();
 
-
-
-
-        System.out.println(contadorHijos);
+            System.out.println(contadorHijos);
             System.out.println(contadorNietos);
 
         } catch (Exception e) {
