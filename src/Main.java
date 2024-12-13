@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         Funcionalidades.cuadroEstadisticas();
-        CRUD.leerTodos("articulo");
+        CRUD.leerTodos("articulos");
 
     }
 }

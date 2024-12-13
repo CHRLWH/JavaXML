@@ -5,10 +5,13 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import static Datos.CRUD.conectarConDocumento;
@@ -45,33 +48,39 @@ public class Funcionalidades {
 
     public static void cuadroEstadisticas(){
 
+        int contadorDePadres = 0;
+        int contadorDeHijos = 0;
+        try {
+            //Create a DocumentBuilder
+            File inputFile = new File("src/Repositorio/articulos.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
 
-        Document doc;
-        NodeList nodeList;
-        Node nodePadre;
-        Node nodoHijo;
-        Node nodoNieto;
-        Element elemento;
-        int contadorHijos = 0;
-        int contadorNietos =0;
+            //Extract the root element
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
+            NodeList nodeList = doc.getElementsByTagName("articulo");
+            System.out.println("Node Length :" + nodeList.getLength());
 
-        //Zona ejecutiva
+            for (int temp = 0; temp < nodeList.getLength(); temp++) {
+                Node node = nodeList.item(temp);
+                System.out.println("\nCurrent Element :" + node.getNodeName());
 
-        try{
-            doc = conectarConDocumento("src/Repositorio/articulos.xml");
+                NodeList childNodes = node.getChildNodes();
+                for (int i = 0; i < childNodes.getLength(); i++) {
+                    Node childNode = childNodes.item(i);
+                    if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                        contadorDeHijos++;
 
-            nodeList = doc.getElementsByTagName("articulos");
+                    }
+                }
 
-                nodoHijo = nodeList.item(1);
-                nodePadre = nodoHijo.getParentNode();
-                contadorHijos = nodePadre.getChildNodes().getLength();
-                contadorNietos = nodoHijo.getChildNodes().getLength();
+                System.out.println(contadorDeHijos);
+            }
 
-            System.out.println(contadorHijos);
-            System.out.println(contadorNietos);
-
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
 
