@@ -17,6 +17,7 @@ public class Menu {
             case 2:
                 break;
             case 3:
+                Principal.agregarProducto();
                 break;
             case 4:
                 Principal.comparadorDePrecios();

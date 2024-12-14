@@ -29,10 +29,6 @@ public class CRUD {
 
     }
 
-    public CRUD() {
-        this.rutaDelArchivoXml = rutaDelArchivoXml;
-    }
-
     public static Document conectarConDocumento(String filePath) {
         File file;
         DocumentBuilderFactory factory;
