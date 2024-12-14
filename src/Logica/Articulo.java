@@ -19,11 +19,10 @@ public class Articulo {
 
     @Override
     public String toString() {
-        return "Articulo{" +
+        return "Articulo\n-----------------------\n"+
                 "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", precio=" + precio +
-                '}';
+                "\nnombre='" + nombre+
+                "\nprecio=" + precio+"\n";
     }
 
     @Override

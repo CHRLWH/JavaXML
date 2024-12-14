@@ -12,34 +12,20 @@ import java.util.Scanner;
  */
 public class EntradaDeDatos {
 
-    /**
-     * Solicita al usuario que ingrese una cadena de texto, mostrando un mensaje previo.
-     *
-     * @param mensaje El mensaje que se muestra al usuario antes de solicitar la entrada.
-     * @return La cadena de texto ingresada por el usuario.
-     */
+
     public static String pedirStringConMensaje(String mensaje) {
         rotular(mensaje);
         String lector = new Scanner(System.in).nextLine();
         return lector;
     }
 
-    /**
-     * Solicita al usuario que ingrese una cadena de texto sin mostrar un mensaje previo.
-     *
-     * @return La cadena de texto ingresada por el usuario.
-     */
+
     public static String pedirStringSinMensaje() {
         String lector = new Scanner(System.in).nextLine();
         return lector;
     }
 
-    /**
-     * Solicita al usuario que ingrese un número entero, mostrando un mensaje previo.
-     *
-     * @param mensaje El mensaje que se muestra al usuario antes de solicitar la entrada.
-     * @return El número entero ingresado por el usuario.
-     */
+
     public static int pedirNumeros(String mensaje) {
         rotular(mensaje);
         int lector = new Scanner(System.in).nextInt();

@@ -1,13 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <articulos>
-
+    <articulo id="1">
+        <nombre>Mesa</nombre>
+        <precio>642</precio>
+    </articulo>
 
     <articulo id="2">
         <nombre>medicinas</nombre>
         <precio>33</precio>
     </articulo>
-
     <articulo id="3">
         <nombre>Mesa</nombre>
         <precio>89</precio>
     </articulo>
-<articulos id="5"><nombre>lapiz</nombre><duracion>10</duracion></articulos><articulo id="5"><precio>10</precio><nombre>lapiz</nombre></articulo></articulos>
+</articulos>

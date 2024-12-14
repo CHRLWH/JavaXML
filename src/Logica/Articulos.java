@@ -17,15 +17,12 @@ public class Articulos {
     }
 
     public void anhadirAlaLista(Articulo articuloQueInsertar){
+        CRUD archivo = new CRUD("src/Repositorio/articulos.xml");
         articulos.add(articuloQueInsertar);
+        archivo.agregar(articuloQueInsertar);
+
     }
 
-    @Override
-    public String toString() {
-        return "Articulos{" +
-                "articulos=" + articulos +
-                '}';
-    }
 
     public String getArticulo(String articuloAConseguir) {
 
@@ -34,6 +31,9 @@ public class Articulos {
                         equals(articuloAConseguir)));
     }
 
+    public int contadorDeArticulos(){
+        return articulos.size();
+    }
     public List<Articulo> getArticulos() {
         return articulos;
     }

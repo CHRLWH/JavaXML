@@ -29,6 +29,9 @@ public class CRUD {
 
     }
 
+    public CRUD() {
+        this.rutaDelArchivoXml = rutaDelArchivoXml;
+    }
 
     public static Document conectarConDocumento(String filePath) {
         File file;
@@ -53,7 +56,7 @@ public class CRUD {
         return doc;
 
     }
-    public static ArrayList<Articulo> leerTodos(String primerNodoDesdeElQueLeer){
+    public static ArrayList<Articulo> leerTodos(String primerNodoDesdeElQueLeer) throws NumberFormatException{
 
         //Zona declarativa
 
