@@ -36,7 +36,7 @@ public class Funcionalidades {
         }
     }
 
-    public static void cuadroDeEstadisticas(Node node, int nivel) throws Exception {
+    public static void cuadroDeEstadisticas(Node node, int nivel) {
         // Mostrar el nodo actual con su nivel (jerarquía)
 
         System.out.println("Nivel " + nivel + ": " + node.getNodeName());

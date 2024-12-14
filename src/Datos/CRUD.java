@@ -1,20 +1,21 @@
 package Datos;
 import Logica.Articulo;
 import Logica.Articulos;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
 
 
 import javax.print.Doc;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -29,19 +30,28 @@ public class CRUD {
     }
 
 
-    public static Document conectarConDocumento(String filePath) throws Exception{
+    public static Document conectarConDocumento(String filePath) {
         File file;
         DocumentBuilderFactory factory;
         DocumentBuilder builder;
-        Document doc;
+        Document doc = null;
+    try {
 
-            file = new File("src/Repositorio/articulos.xml");
-            factory = DocumentBuilderFactory.newInstance();
-            builder = factory.newDocumentBuilder();
-            //Sin éste parse no podría partir de un nodo concreto
-            doc = builder.parse(filePath);
 
+        file = new File("src/Repositorio/articulos.xml");
+        factory = DocumentBuilderFactory.newInstance();
+        builder = factory.newDocumentBuilder();
+        //Sin éste parse no podría partir de un nodo concreto
+        doc = builder.parse(filePath);
+    }catch (ParserConfigurationException e){
+        System.out.println("Fallo de parseo");
+
+    }catch (Exception a){
+        System.out.println("Error desconocido");
+        a.printStackTrace();
+    }
         return doc;
+
     }
     public static ArrayList<Articulo> leerTodos(String primerNodoDesdeElQueLeer){
 
@@ -77,8 +87,16 @@ public class CRUD {
                     articulosAux.add(articuloAux);
                 }
             }
-        } catch (Exception e) {
+        } catch (DOMException e) {
+            System.out.println("Problema con valor de nodo");
             e.printStackTrace();
+        }catch (NullPointerException a){
+            System.out.println("Valor null detectado");
+        }catch (Exception i){
+            System.out.println("Excepcion desconocida");
+            i.printStackTrace();
+        }finally {
+            //Cerrar las conexiones pero no se que tengo que cerrar exactamente
         }
 
         return articulosAux;
@@ -98,25 +116,24 @@ public class CRUD {
        StreamResult result;
        File file;
        //Zona ejecutiva
+
         try {
 
             doc = conectarConDocumento("src/Repositorio/articulos.xml");
             root = doc.getDocumentElement();
 
         // Crear un nuevo elemento "articulo"
-            nuevoEntrenamiento = doc.createElement("articulos");
+            nuevoEntrenamiento = doc.createElement("articulo");
             nuevoEntrenamiento.setAttribute("id", String.valueOf(entrenamiento.getId()));
 
             nombre = doc.createElement("nombre");
             nombre.setTextContent(entrenamiento.getNombre());
 
-            duracion = doc.createElement("duracion");
+            duracion = doc.createElement("precio");
             duracion.setTextContent(String.valueOf(entrenamiento.getPrecio()));
 
-
-            nuevoEntrenamiento.appendChild(nombre);
             nuevoEntrenamiento.appendChild(duracion);
-
+            nuevoEntrenamiento.appendChild(nombre);
 
             root.appendChild(nuevoEntrenamiento);
 
@@ -124,6 +141,8 @@ public class CRUD {
             file = new File("src/Repositorio/articulos.xml");
             transformerFactory = TransformerFactory.newInstance();
             transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT, "no");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
             source = new DOMSource(doc);
             result = new StreamResult(file);
             transformer.transform(source, result);
