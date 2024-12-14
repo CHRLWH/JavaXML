@@ -1,20 +1,10 @@
 package Logica;
 
 import Datos.CRUD;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import static Datos.CRUD.conectarConDocumento;
 
 public class Funcionalidades {
 
@@ -46,44 +36,29 @@ public class Funcionalidades {
         }
     }
 
-    public static void cuadroEstadisticas(){
+    public static void cuadroDeEstadisticas(Node node, int nivel) throws Exception {
+        // Mostrar el nodo actual con su nivel (jerarquía)
 
-        int contadorDePadres = 0;
-        int contadorDeHijos = 0;
-        try {
-            //Create a DocumentBuilder
-            File inputFile = new File("src/Repositorio/articulos.xml");
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(inputFile);
-            doc.getDocumentElement().normalize();
+        System.out.println("Nivel " + nivel + ": " + node.getNodeName());
 
-            //Extract the root element
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+        // Recorrer los nodos hijos
+        NodeList nodosHijo = node.getChildNodes();
+        Node child;
+        int conteoDeHijos = 0;
 
-            NodeList nodeList = doc.getElementsByTagName("articulo");
-            System.out.println("Node Length :" + nodeList.getLength());
-
-            for (int temp = 0; temp < nodeList.getLength(); temp++) {
-                Node node = nodeList.item(temp);
-                System.out.println("\nCurrent Element :" + node.getNodeName());
-
-                NodeList childNodes = node.getChildNodes();
-                for (int i = 0; i < childNodes.getLength(); i++) {
-                    Node childNode = childNodes.item(i);
-                    if (childNode.getNodeType() == Node.ELEMENT_NODE) {
-                        contadorDeHijos++;
-
-                    }
-                }
-
-                System.out.println(contadorDeHijos);
+        for (int i = 0; i < nodosHijo.getLength(); i++) {
+            child = nodosHijo.item(i);
+            if (child.getNodeType() == Node.ELEMENT_NODE) {
+                conteoDeHijos++;
+                // Llamada recursiva para los hijos
+                cuadroDeEstadisticas(child, nivel + 1);
             }
-
-        }catch (Exception e){
-            e.printStackTrace();
         }
 
-
+        // Mostrar el conteo de hijos por nivel
+        if (conteoDeHijos > 0) {
+            System.out.println("Número de nodos hijos en nivel " + nivel + ": " + conteoDeHijos);
+        }
     }
 }
+
