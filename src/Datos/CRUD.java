@@ -194,7 +194,7 @@ public class CRUD {
         //Usar node.delete..
 
         try {
-            File file = new File(rutaDelArchivoXml);
+            File file = new File("src/Repositorio/articulos.xml");
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
             Document doc = builder.parse(file);

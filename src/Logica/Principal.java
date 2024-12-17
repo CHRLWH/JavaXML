@@ -51,8 +51,7 @@ public class Principal {
 
     public static void cuadroDeStats() {
             try {
-                Document documento = CRUD.conectarConDocumento("src/Repositorio/articulos.xml");
-                Funcionalidades.cuadroDeEstadisticas(documento.getDocumentElement(),0);
+                Funcionalidades.cuadroEstadisticas();
             }catch (Exception e){
                 System.out.println("Excepcion desconocida");
                 e.printStackTrace();
@@ -61,7 +60,7 @@ public class Principal {
 
     public static void agregarProducto() {
         try {
-            Funcionalidades.
+            Funcionalidades.agregarDatos();
         }catch (Exception a){
             System.out.println("Excepcion desconocida");
             a.printStackTrace();

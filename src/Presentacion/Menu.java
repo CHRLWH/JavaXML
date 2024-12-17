@@ -15,6 +15,7 @@ public class Menu {
                     Principal.mostrarTodosLosDatos();
                 break;
             case 2:
+
                 break;
             case 3:
                 Principal.agregarProducto();
