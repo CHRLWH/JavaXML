@@ -21,12 +21,7 @@ import java.util.ArrayList;
 
 public class CRUD {
 
-    private final String rutaDelArchivoXml;
-
-    public CRUD(String rutaDelArchivoXml) {
-
-        this.rutaDelArchivoXml = rutaDelArchivoXml;
-
+    public CRUD() {
     }
 
     public static Document conectarConDocumento(String filePath) {

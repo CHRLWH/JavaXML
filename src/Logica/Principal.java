@@ -61,7 +61,7 @@ public class Principal {
 
     public static void agregarProducto() {
         try {
-            Funcionalidades.agregarProducto();
+            Funcionalidades.
         }catch (Exception a){
             System.out.println("Excepcion desconocida");
             a.printStackTrace();

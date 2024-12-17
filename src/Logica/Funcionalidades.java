@@ -2,20 +2,31 @@ package Logica;
 
 import Datos.CRUD;
 import Presentacion.EntradaDeDatos;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import static Datos.CRUD.conectarConDocumento;
 
 public class Funcionalidades {
 
-    public static Articulo compararPreciosDeArticulosPorId(int idArticulo1,int idArticulo2){
+    public static Articulo compararPreciosDeArticulosPorId(int idArticulo1,int idArticulo2) {
 
         //Comparador de precios buscando por id
 
         //Zona declarativa
         Articulos articulos = new Articulos();
         ArrayList <Articulo> articulosAux = new ArrayList<Articulo>();
+        CRUD crud = new CRUD("src/Repositorio/articulos.xml");
 
         //Zona ejecutiva
         for (Articulo i:articulos.getArticulos()){
@@ -23,60 +34,75 @@ public class Funcionalidades {
                 articulosAux.add(i);
             }
        }
-        if (articulosAux.size() == 1){
-            throw new IndexOutOfBoundsException("Error de index");
-        }else {
 
-            System.out.println("Articulos a comparar:");
-            System.out.println("Primer articulo\n" + articulosAux.get(0).toString());
-            System.out.println("Segundo articulo\n" + articulosAux.get(1).toString());
-            if (articulosAux.get(0).getPrecio() > articulosAux.get(1).getPrecio()) {
-                System.out.println("El articulo --> " + articulosAux.get(0) + " es mayor");
-                return articulosAux.get(0);
-            } else {
-                System.out.println("El articulo --> " + articulosAux.get(1) + " es mayor");
-                return articulosAux.get(1);
+        System.out.println("Articulos a comparar:");
+        System.out.println("Primer articulo --> "+articulosAux.get(0).toString());
+        System.out.println("Segundo articulo --> "+articulosAux.get(1).toString());
+        if (articulosAux.get(0).getPrecio() > articulosAux.get(1).getPrecio()){
+            System.out.println("El articulo --> "+articulosAux.get(0)+" es mayor");
+            return articulosAux.get(0);
+        }else{
+            System.out.println("El articulo --> "+articulosAux.get(1)+ " es mayor");
+            return articulosAux.get(1);
+        }
+    }
+
+    public static void cuadroEstadisticas(){
+
+        int contadorDePadres = 0;
+        int contadorDeHijos = 0;
+        try {
+            //Create a DocumentBuilder
+            File inputFile = new File("src/Repositorio/articulos.xml");
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+
+            //Extract the root element
+            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+            NodeList nodeList = doc.getElementsByTagName("articulo");
+            System.out.println("Node Length :" + nodeList.getLength());
+
+            for (int temp = 0; temp < nodeList.getLength(); temp++) {
+                Node node = nodeList.item(temp);
+                System.out.println("\nCurrent Element :" + node.getNodeName());
+
+                NodeList childNodes = node.getChildNodes();
+                for (int i = 0; i < childNodes.getLength(); i++) {
+                    Node childNode = childNodes.item(i);
+                    if (childNode.getNodeType() == Node.ELEMENT_NODE) {
+                        contadorDeHijos++;
+
+                    }
+                }
+
+                System.out.println(contadorDeHijos);
             }
-        }
-    }
 
-    public static void cuadroDeEstadisticas(Node node, int nivel) {
-        // Mostrar el nodo actual con su nivel (jerarquía)
-
-        System.out.println("Nivel " + nivel + ": " + node.getNodeName());
-
-        // Recorrer los nodos hijos
-        NodeList nodosHijo = node.getChildNodes();
-        Node child;
-        int conteoDeHijos = 0;
-
-        for (int i = 0; i < nodosHijo.getLength(); i++) {
-            child = nodosHijo.item(i);
-            if (child.getNodeType() == Node.ELEMENT_NODE) {
-                conteoDeHijos++;
-                // Llamada recursiva para los hijos
-                cuadroDeEstadisticas(child, nivel + 1);
-            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
-        // Mostrar el conteo de hijos por nivel
-        if (conteoDeHijos > 0) {
-            System.out.println("Número de nodos hijos en nivel " + nivel + ": " + conteoDeHijos);
+
+    }
+
+    public static void agregarDatos() {
+
+        String nombre;
+        int precio;
+        Articulo articulo1;
+        Articulos articulos;
+        try{
+            nombre = EntradaDeDatos.pedirStringConMensaje("Introduce el nombre del articulo a añadir");
+            precio = EntradaDeDatos.pedirNumeros("Introduce el precio de éste artículo");
+            articulos = new Articulos();
+            articulo1 = new Articulo(articulos.contadorDeArticulos()+1,nombre,precio);
+
+
         }
-    }
-
-    public static void agregarProducto(){
-        Articulos articulos = new Articulos();
-        Articulo articulo;
-        int numeroDeProductos = articulos.contadorDeArticulos();
-
-        System.out.println("Bienvenido a registrar producto!");
-        String nombre = EntradaDeDatos.pedirStringConMensaje("Introduce el nombre del articulo a registrar");
-        int precio = EntradaDeDatos.pedirNumeros("Introduce el precio del articulo");
-
-        articulo = new Articulo(numeroDeProductos+1,nombre,precio);
-        articulos.anhadirAlaLista(articulo);
 
     }
+
 }
-
