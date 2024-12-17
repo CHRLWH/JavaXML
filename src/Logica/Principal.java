@@ -11,7 +11,7 @@ public class Principal {
     public static void mostrarTodosLosDatos(){
        try {
            Articulos articulos = new Articulos();
-           System.out.println(articulos);
+           articulos.getArticulos().stream().forEach(System.out::println);
        }catch (Exception e){
            System.out.println("Error desconocido");
            e.printStackTrace();
@@ -43,7 +43,7 @@ public class Principal {
                 textoDeInicio = "Vuelve a introducir los id!";
             }
             catch (Exception e) {
-                System.out.println("Excepcion desconocida!");
+                System.out.println("Error desconocida!");
                 e.printStackTrace();
             }
         } while (excepcionDisparada);
@@ -53,7 +53,7 @@ public class Principal {
             try {
                 Funcionalidades.cuadroEstadisticas();
             }catch (Exception e){
-                System.out.println("Excepcion desconocida");
+                System.out.println("Error desconocida");
                 e.printStackTrace();
             }
     }
@@ -62,7 +62,16 @@ public class Principal {
         try {
             Funcionalidades.agregarDatos();
         }catch (Exception a){
-            System.out.println("Excepcion desconocida");
+            System.out.println("Error desconocida");
+            a.printStackTrace();
+        }
+    }
+
+    public static void deletearProducto(){
+        try {
+            Funcionalidades.borrar();
+        }catch (Exception a){
+            System.out.println("Error desconocido");
             a.printStackTrace();
         }
     }

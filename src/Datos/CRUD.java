@@ -21,22 +21,28 @@ import java.util.ArrayList;
 
 public class CRUD {
 
+    private final String ruta;
     public CRUD() {
+        this.ruta = "D:\\XAMPP\\htdocs\\dashboard\\ajax\\datos\\articulos.xml";
     }
 
-    public static Document conectarConDocumento(String filePath) {
-        File file;
+    public Document conectarConDocumento() {
+        //Zona declarativa
+
+
         DocumentBuilderFactory factory;
         DocumentBuilder builder;
         Document doc = null;
-    try {
+        //Zona ejecutiva
+
+        try {
 
 
-        file = new File("src/Repositorio/articulos.xml");
+
         factory = DocumentBuilderFactory.newInstance();
         builder = factory.newDocumentBuilder();
         //Sin éste parse no podría partir de un nodo concreto
-        doc = builder.parse(filePath);
+        doc = builder.parse(ruta);
     }catch (ParserConfigurationException e){
         System.out.println("Fallo de parseo");
 
@@ -47,7 +53,7 @@ public class CRUD {
         return doc;
 
     }
-    public static ArrayList<Articulo> leerTodos(String primerNodoDesdeElQueLeer) throws NumberFormatException{
+    public ArrayList<Articulo> leerTodos(String primerNodoDesdeElQueLeer) throws NumberFormatException{
 
         //Zona declarativa
 
@@ -66,7 +72,7 @@ public class CRUD {
 
         try{
 
-            doc = conectarConDocumento("src/Repositorio/articulos.xml");
+            doc = conectarConDocumento();
 
             nodeList = doc.getElementsByTagName(primerNodoDesdeElQueLeer);
             for (int i = 0; i<nodeList.getLength();i++){
@@ -113,7 +119,7 @@ public class CRUD {
 
         try {
 
-            doc = conectarConDocumento("src/Repositorio/articulos.xml");
+            doc = conectarConDocumento();
             root = doc.getDocumentElement();
 
         // Crear un nuevo elemento "articulo"
@@ -132,7 +138,7 @@ public class CRUD {
             root.appendChild(nuevoEntrenamiento);
 
             // Guardar los cambios en el archivo XML
-            file = new File("src/Repositorio/articulos.xml");
+            file = new File(ruta);
             transformerFactory = TransformerFactory.newInstance();
             transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "no");
@@ -161,7 +167,7 @@ public class CRUD {
         //Zona ejecutiva
         try {
 
-            doc = conectarConDocumento("src/Repositorio/articulos.xml");
+            doc = conectarConDocumento();
 
             nodeList = doc.getElementsByTagName("articulo");
 
@@ -179,7 +185,7 @@ public class CRUD {
             }
 
 // Guardar los cambios en el archivo XML
-            file = new File("src/Repositorio/articulos.xml");
+            file = new File(ruta);
             transformerFactory = TransformerFactory.newInstance();
             transformer = transformerFactory.newTransformer();
             source = new DOMSource(doc);
@@ -192,20 +198,34 @@ public class CRUD {
     }
     public void deletear(int idDelArticuloABorrar){
         //Usar node.delete..
+        //Zona declarativa
+
+        File file;
+        DocumentBuilderFactory factory;
+        DocumentBuilder builder;
+        Document doc;
+        NodeList nodeList;
+        Node node;
+        Element elemento;
+        TransformerFactory transformerFactory;
+        Transformer transformer;
+        DOMSource source;
+        StreamResult result;
+
+        //Zona ejecutiva
 
         try {
-            File file = new File("src/Repositorio/articulos.xml");
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.parse(file);
-
-            NodeList nodeList = doc.getElementsByTagName("articulo");
+             file = new File(ruta);
+             factory = DocumentBuilderFactory.newInstance();
+             builder = factory.newDocumentBuilder();
+             doc = builder.parse(file);
+             nodeList = doc.getElementsByTagName("articulo");
 
             for (int i = 0; i < nodeList.getLength(); i++) {
-                Node node = nodeList.item(i);
+                 node = nodeList.item(i);
 
                 if (node.getNodeType() == Node.ELEMENT_NODE) {
-                    Element elemento = (Element) node;
+                     elemento = (Element) node;
 
                     if (Integer.parseInt(elemento.getAttribute("id")) == idDelArticuloABorrar) {
                         elemento.getParentNode().removeChild(elemento);
@@ -213,12 +233,11 @@ public class CRUD {
                     }
                 }
             }
-
 // Guardar los cambios en el archivo XML
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(file);
+            transformerFactory = TransformerFactory.newInstance();
+            transformer = transformerFactory.newTransformer();
+            source = new DOMSource(doc);
+            result = new StreamResult(file);
             transformer.transform(source, result);
 
         } catch (Exception e) {

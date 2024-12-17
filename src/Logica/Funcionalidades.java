@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static Datos.CRUD.conectarConDocumento;
+
 
 public class Funcionalidades {
 
@@ -84,6 +84,14 @@ public class Funcionalidades {
     }
 
     public static void borrar(){
+        System.out.println("Catalogo de articulos:");
+        Principal.mostrarTodosLosDatos();
+        int id = EntradaDeDatos.pedirNumeros("Introduce el id del articulo a borrar");
+        CRUD fichero = new CRUD();
+        fichero.deletear(id);
+        System.out.println("Articulo borrado");
+        System.out.println("Nueva lista de datos");
+        Principal.mostrarTodosLosDatos();
 
     }
 
