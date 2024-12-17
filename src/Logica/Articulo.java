@@ -19,6 +19,7 @@ public class Articulo {
 
     @Override
     public String toString() {
+
         return "Articulo\n-----------------------\n"+
                 "id=" + id +
                 "\nnombre='" + nombre+
