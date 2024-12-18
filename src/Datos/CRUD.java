@@ -22,8 +22,10 @@ import java.util.ArrayList;
 public class CRUD {
 
     private final String ruta;
+
+    //ruta para ajax: "D:\\XAMPP\\htdocs\\dashboard\\ajax\\datos\\articulos.xml"
     public CRUD() {
-        this.ruta = "D:\\XAMPP\\htdocs\\dashboard\\ajax\\datos\\articulos.xml";
+        this.ruta = "src/articulos.xml";
     }
 
     public Document conectarConDocumento() {
@@ -141,8 +143,10 @@ public class CRUD {
             file = new File(ruta);
             transformerFactory = TransformerFactory.newInstance();
             transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "no");
-            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+            transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+
             source = new DOMSource(doc);
             result = new StreamResult(file);
             transformer.transform(source, result);
