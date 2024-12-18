@@ -75,4 +75,13 @@ public class Principal {
             a.printStackTrace();
         }
     }
+
+    public static void cambiarProducto(){
+        try {
+            Funcionalidades.cambiar();
+        }catch (Exception a){
+                System.out.println("Error desconocido");
+                a.printStackTrace();
+            }
+    }
 }

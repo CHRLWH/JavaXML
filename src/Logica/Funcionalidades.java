@@ -64,16 +64,29 @@ public class Funcionalidades {
         Articulos articulos;
         CRUD crud = new CRUD();
 
-        do {
+
             nombre = EntradaDeDatos.pedirStringConMensaje("Introduce el nombre del articulo a añadir");
             precio = EntradaDeDatos.pedirNumeros("Introduce el precio de éste artículo");
             articulos = new Articulos();
             articulo1 = new Articulo(articulos.contadorDeArticulos()+1,nombre,precio);
-        }while (!Character.isDigit(precio) || nombre.isEmpty());
+
         crud.agregar(articulo1);
 
     }
+    public static void cambiar(){
+        System.out.println("Catalogo de articulos:");
+        Principal.mostrarTodosLosDatos();
+        int id = EntradaDeDatos.pedirNumeros("Introduce el id del articulo a cambiar");
+        CRUD fichero = new CRUD();
+        String nombre = EntradaDeDatos.pedirStringConMensaje("Introduce el nuevo nombre del articulo. Si quiere conservar el nombre introduzcalo de nuevo");
+        int precio = EntradaDeDatos.pedirNumeros("Introduzca el nuevo precio del articulo");
+        Articulos articuloaux = new Articulos();
 
+        int idDelArticulo = articuloaux.getIdArticulo(id);;
+        Articulo articuloAux = new Articulo(idDelArticulo,nombre,precio);
+        fichero.actualizar(id,articuloAux);
+
+    }
     public static void borrar(){
         System.out.println("Catalogo de articulos:");
         Principal.mostrarTodosLosDatos();
@@ -85,5 +98,8 @@ public class Funcionalidades {
         Principal.mostrarTodosLosDatos();
 
     }
+    public void reeNumerarLista(){
 
+
+    }
 }

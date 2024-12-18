@@ -1,40 +1,58 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<articulos>
-      
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><articulos>
+        
+  
   <articulo id="1">
-            
+                
+    
     <nombre>Mesa</nombre>
-            
+                
+    
     <precio>642</precio>
-        
-  </articulo>
-      
-  <articulo id="2">
             
-    <nombre>medicinas</nombre>
-            
-    <precio>33</precio>
-        
+  
   </articulo>
+        
+  
       
+  
   <articulo id="3">
-            
+                
+    
     <nombre>Mesa</nombre>
-            
+                
+    
     <precio>89</precio>
-        
+            
+  
   </articulo>
+    
   
   <articulo id="4">
+        
     <precio>1</precio>
+        
     <nombre>chocolate</nombre>
+      
   </articulo>
+    
   <articulo id="5">
+        
     <precio>1</precio>
+        
     <nombre>s</nombre>
+      
   </articulo>
+    
+  <articulo id="6">
+        
+    <precio>1</precio>
+        
+    <nombre>no</nombre>
+      
+  </articulo>
+  
   <articulo id="6">
     <precio>1</precio>
-    <nombre>si</nombre>
+    <nombre>no</nombre>
   </articulo>
 </articulos>

@@ -20,7 +20,15 @@ public class Articulos {
 
 
 
-
+    public int getIdArticulo(int id){
+        int idQueRetornar = 0;
+        for (Articulo i: articulos){
+            if (i.getId() == id){
+                idQueRetornar = i.getId();
+            }
+        }
+        return idQueRetornar;
+    }
     public int contadorDeArticulos(){
         return articulos.size();
     }
