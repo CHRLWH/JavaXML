@@ -2,17 +2,6 @@ package Logica;
 
 import Datos.CRUD;
 import Presentacion.EntradaDeDatos;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -34,13 +23,13 @@ public class Funcionalidades {
        }
 
         System.out.println("Articulos a comparar:");
-        System.out.println("Primer articulo --> "+articulosAux.get(0).toString());
-        System.out.println("Segundo articulo --> "+articulosAux.get(1).toString());
+        System.out.println("PRIMER ARTICULO\n"+articulosAux.get(0).toString());
+        System.out.println("SEGUNDO ARTICULO\n"+articulosAux.get(1).toString());
         if (articulosAux.get(0).getPrecio() > articulosAux.get(1).getPrecio()){
-            System.out.println("El articulo --> "+articulosAux.get(0)+" es mayor");
+            System.out.println("ARTICULO MAS CARO \n"+articulosAux.get(0));
             return articulosAux.get(0);
         }else{
-            System.out.println("El articulo --> "+articulosAux.get(1)+ " es mayor");
+            System.out.println("ARTICULO MAS CARO \n"+articulosAux.get(1));
             return articulosAux.get(1);
         }
     }
@@ -56,7 +45,7 @@ public class Funcionalidades {
                 System.out.println("Nodos padre --> "+nodosPadre);
                 for (Articulo i : articulos.getArticulos()){
                     nodosHijo++;
-                    System.out.println("Nodo"+ nodosHijo+ "--> "+Integer.toString(i.toString().length()).length()+" sub nodos.");
+                    System.out.println("   |_ Nodo"+ nodosHijo+ "--> "+Integer.toString(i.toString().length()).length()+" sub nodos.");
 
                 }
 
@@ -75,11 +64,12 @@ public class Funcionalidades {
         Articulos articulos;
         CRUD crud = new CRUD();
 
-        nombre = EntradaDeDatos.pedirStringConMensaje("Introduce el nombre del articulo a añadir");
-        precio = EntradaDeDatos.pedirNumeros("Introduce el precio de éste artículo");
-        articulos = new Articulos();
-        articulo1 = new Articulo(articulos.contadorDeArticulos()+1,nombre,precio);
-
+        do {
+            nombre = EntradaDeDatos.pedirStringConMensaje("Introduce el nombre del articulo a añadir"));
+            precio = EntradaDeDatos.pedirNumeros("Introduce el precio de éste artículo");
+            articulos = new Articulos();
+            articulo1 = new Articulo(articulos.contadorDeArticulos()+1,nombre,precio);
+        }while (!Character.isDigit(precio) || nombre.isEmpty());
         crud.agregar(articulo1);
 
     }
