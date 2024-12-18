@@ -53,16 +53,14 @@ public class Funcionalidades {
         try {
                 articulos = new Articulos();
                 nodosPadre = articulos.contadorDeArticulos();
-
+                System.out.println("Nodos padre --> "+nodosPadre);
                 for (Articulo i : articulos.getArticulos()){
-                    System.out.println(i.toString().length());
-
                     nodosHijo++;
+                    System.out.println("Nodo"+ nodosHijo+ "--> "+Integer.toString(i.toString().length()).length()+" sub nodos.");
+
                 }
 
 
-            System.out.println("Nodos padre --> "+nodosPadre);
-            System.out.println("Nodos hijo --> "+nodosHijo);
         }catch (Exception e){
             e.printStackTrace();
         }
