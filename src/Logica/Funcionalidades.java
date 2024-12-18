@@ -65,7 +65,7 @@ public class Funcionalidades {
         CRUD crud = new CRUD();
 
         do {
-            nombre = EntradaDeDatos.pedirStringConMensaje("Introduce el nombre del articulo a añadir"));
+            nombre = EntradaDeDatos.pedirStringConMensaje("Introduce el nombre del articulo a añadir");
             precio = EntradaDeDatos.pedirNumeros("Introduce el precio de éste artículo");
             articulos = new Articulos();
             articulo1 = new Articulo(articulos.contadorDeArticulos()+1,nombre,precio);
