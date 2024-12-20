@@ -46,14 +46,11 @@ public class Funcionalidades {
                 for (Articulo i : articulos.getArticulos()){
                     nodosHijo++;
                     System.out.println("   |_ Nodo"+ nodosHijo+ "--> "+Integer.toString(i.toString().length()).length()+" sub nodos.");
-
                 }
-
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
 
     }
 

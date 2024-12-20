@@ -1,11 +1,7 @@
 package Datos;
 import Logica.Articulo;
-import Logica.Articulos;
 import org.w3c.dom.*;
-import org.xml.sax.SAXException;
 
-
-import javax.print.Doc;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,7 +11,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -23,9 +18,8 @@ public class CRUD {
 
     private final String ruta;
 
-    //ruta para ajax: "D:\\XAMPP\\htdocs\\dashboard\\ajax\\datos\\articulos.xml"
     public CRUD() {
-        this.ruta = "src/articulos.xml";
+        this.ruta = "D:\\\\XAMPP\\\\htdocs\\\\dashboard\\\\ajax\\\\datos\\\\articulos.xml";
     }
 
     public Document conectarConDocumento() {
@@ -38,9 +32,6 @@ public class CRUD {
         //Zona ejecutiva
 
         try {
-
-
-
         factory = DocumentBuilderFactory.newInstance();
         builder = factory.newDocumentBuilder();
         //Sin éste parse no podría partir de un nodo concreto
@@ -109,7 +100,7 @@ public class CRUD {
 
        Document doc;
        Element root;
-       Element nuevoEntrenamiento;
+       Element nuevoArticulo;
        Element nombre;
        Element duracion;
        TransformerFactory transformerFactory;
@@ -117,6 +108,7 @@ public class CRUD {
        DOMSource source;
        StreamResult result;
        File file;
+
        //Zona ejecutiva
 
         try {
@@ -125,8 +117,8 @@ public class CRUD {
             root = doc.getDocumentElement();
 
         // Crear un nuevo elemento "articulo"
-            nuevoEntrenamiento = doc.createElement("articulo");
-            nuevoEntrenamiento.setAttribute("id", String.valueOf(entrenamiento.getId()));
+            nuevoArticulo = doc.createElement("articulo");
+            nuevoArticulo.setAttribute("id", String.valueOf(entrenamiento.getId()));
 
             nombre = doc.createElement("nombre");
             nombre.setTextContent(entrenamiento.getNombre());
@@ -134,15 +126,16 @@ public class CRUD {
             duracion = doc.createElement("precio");
             duracion.setTextContent(String.valueOf(entrenamiento.getPrecio()));
 
-            nuevoEntrenamiento.appendChild(duracion);
-            nuevoEntrenamiento.appendChild(nombre);
+            nuevoArticulo.appendChild(duracion);
+            nuevoArticulo.appendChild(nombre);
 
-            root.appendChild(nuevoEntrenamiento);
+            root.appendChild(nuevoArticulo);
 
             // Guardar los cambios en el archivo XML
             file = new File(ruta);
             transformerFactory = TransformerFactory.newInstance();
             transformer = transformerFactory.newTransformer();
+            
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
@@ -237,7 +230,8 @@ public class CRUD {
                     }
                 }
             }
-// Guardar los cambios en el archivo XML
+
+            reorganizar();
             transformerFactory = TransformerFactory.newInstance();
             transformer = transformerFactory.newTransformer();
             source = new DOMSource(doc);
@@ -249,4 +243,26 @@ public class CRUD {
         }
     }
 
+        public void reorganizar() {
+            // Declarativa
+            Document doc;
+            Node node;
+            Element elemento;
+            NodeList nodeList;
+            doc = conectarConDocumento();
+            nodeList = doc.getElementsByTagName("articulo");
+            //Zona ejecutiva
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                node = nodeList.item(i);
+
+                if (node.getNodeType() == Node.ELEMENT_NODE) {
+                    elemento = (Element) node;
+
+                    elemento.setAttribute("id",String.valueOf(i+1));
+                }
+            }
+
+
+        }
+    }
 }

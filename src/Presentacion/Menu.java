@@ -4,8 +4,6 @@ import Logica.Articulos;
 import Logica.Principal;
 
 public class Menu {
-    public Menu() {
-    }
 
     public static void iniciarPrograma() {
         String salida = "";
